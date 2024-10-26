@@ -5,7 +5,7 @@ function updateWeather (response) {
   let humidityEl = document.querySelector('#humidity')
   let windEl = document.querySelector('#wind')
   let timeEl = document.querySelector('#time')
-  let date = new Date(response.data.time * 1000)
+  let date = response.data.time * 1000
   let iconEl = document.querySelector('#icon-image')
 
   console.log(response.data)
