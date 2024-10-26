@@ -15,19 +15,20 @@ function updateWeather (response) {
   windEl.innerHTML = `${response.data.wind.speed} km/h`
   timeEl.innerHTML = formatDate(date)
   iconEl.innerHTML = `<img class="current-temperature-icon" src="${response.data.condition.icon_url}" alt="weather icon">`
+  getForecast(response.data.city)
 }
 
 function formatDate (date) {
   let minutes = date.getMinutes()
   let hours = date.getHours()
   let days = [
+    'Sunday',
     'Monday',
     'Tuesday',
     'Wednesday',
     'Thursday',
     'Friday',
-    'Saturday',
-    'Sunday'
+    'Saturday'
   ]
   let day = days[date.getDay()]
 
@@ -54,19 +55,36 @@ function handleSearchSubmit (e) {
   searchCity(searchInput.value)
 }
 
-function displayForecast () {
-  let days = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+function formatDay (timestamp) {
+  let date = new Date(timestamp * 1000)
+  let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  return days[date.getDay()]
+}
+
+function getForecast (city) {
+  // Add your personal API_KEY from https://www.shecodes.io/learn/apis/weather
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${API_KEY}&units=metric`
+  axios.get(apiUrl).then(displayForecast)
+}
+
+function displayForecast (response) {
   let forecastHtml = ''
 
-  days.forEach(function (day) {
-    forecastHtml =
-      forecastHtml +
-      `
+  response.data.daily.forEach(function (day, index) {
+    if (index < 5) {
+      forecastHtml =
+        forecastHtml +
+        `
         <div class="forecast-day">
-        <div class="day-of-week">${day}</div>
-        <img class="forecast-icon" src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/mist-night.png" alt="weather icon">
-        <div class="forecast-temp"><strong>29º </strong>13º</div>
+        <div class="day-of-week">${formatDay(day.time)}</div>
+        <img class="forecast-icon" src="${
+          day.condition.icon_url
+        }" alt="weather icon">
+        <div class="forecast-temp"><strong>${Math.round(
+          day.temperature.maximum
+        )}º </strong>${Math.round(day.temperature.minimum)}º</div>
         </div>`
+    }
   })
   let forecastEl = document.querySelector('#forecast')
   forecastEl.innerHTML = forecastHtml
@@ -77,4 +95,3 @@ let searchFormEl = document.querySelector('#search-form')
 searchFormEl.addEventListener('submit', handleSearchSubmit)
 
 searchCity('Paris')
-displayForecast()

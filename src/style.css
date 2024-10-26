@@ -115,10 +115,12 @@ footer {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 0.5rem;
 }
 
 .forecast-icon {
-  width: 2.5rem;
+  width: 4rem;
+  /* height: 4rem; */
   padding: 1rem;
 }
 .day-of-week {
