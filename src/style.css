@@ -31,7 +31,7 @@ header {
   border: none;
   color: rgba(39, 33, 66, 0.4);
   font-size: 16px;
-  padding: 20px;
+  padding: 1rem;
   width: 75%;
   border-radius: 6px;
 }
@@ -42,7 +42,7 @@ header {
   background-color: rgb(243, 118, 243);
   color: white;
   border: none;
-  padding: 20px;
+  padding: 1rem 1.25rem;
   line-height: 1;
   border-radius: 5px;
 }
@@ -100,6 +100,34 @@ main {
 footer {
   border-top: 1px solid #f9f7fe;
   text-align: center;
-  padding-top: 15px;
+  /* padding-top: 15px; */
   color: rgba(39, 33, 66, 0.4);
+}
+
+.forecast-section {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+}
+
+.forecast-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.forecast-icon {
+  width: 2.5rem;
+  padding: 1rem;
+}
+.day-of-week {
+  color: rgba(39, 33, 66, 0.4);
+}
+
+.forecast-temp {
+  color: rgb(243, 118, 243);
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
 }

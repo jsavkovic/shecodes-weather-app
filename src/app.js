@@ -5,11 +5,8 @@ function updateWeather (response) {
   let humidityEl = document.querySelector('#humidity')
   let windEl = document.querySelector('#wind')
   let timeEl = document.querySelector('#time')
-  let date = response.data.time * 1000
+  let date = new Date(response.data.time * 1000)
   let iconEl = document.querySelector('#icon-image')
-
-  console.log(response.data)
-  console.log(iconEl)
 
   tempEl.innerHTML = Math.round(response.data.temperature.current)
   cityEl.innerHTML = response.data.city
@@ -57,7 +54,27 @@ function handleSearchSubmit (e) {
   searchCity(searchInput.value)
 }
 
+function displayForecast () {
+  let days = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  let forecastHtml = ''
+
+  days.forEach(function (day) {
+    forecastHtml =
+      forecastHtml +
+      `
+        <div class="forecast-day">
+        <div class="day-of-week">${day}</div>
+        <img class="forecast-icon" src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/mist-night.png" alt="weather icon">
+        <div class="forecast-temp"><strong>29º </strong>13º</div>
+        </div>`
+  })
+  let forecastEl = document.querySelector('#forecast')
+  forecastEl.innerHTML = forecastHtml
+}
+
 let searchFormEl = document.querySelector('#search-form')
+
 searchFormEl.addEventListener('submit', handleSearchSubmit)
 
 searchCity('Paris')
+displayForecast()
